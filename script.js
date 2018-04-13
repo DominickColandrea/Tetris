@@ -236,6 +236,18 @@ requestAnimationFrame(update);
 
 function updateScore() {
     document.getElementById('score').innerText = player.score;
+    if (player.score>800) {
+        dropInterval =300;
+    }
+    else if (player.score>400) {
+      dropInterval =450
+    }
+    else if (player.score>200) {
+      dropInterval =600
+    }
+    else if (player.score>100) {
+      dropInterval =850
+    }
 }
 
 
