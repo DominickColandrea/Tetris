@@ -11,8 +11,9 @@ const matrix =[
 ];// end matrix
 
 const player ={
-  matrix:createPiece("S"),
-  pos:{x:5, y:-1}
+  matrix:null,
+  pos:{x:5, y:-1},
+  score:0
 };
 const arena = createMatrix(12,20);
 
@@ -32,6 +33,7 @@ let dropInterval =1000;
 let lastTime =0;
 
 function arenaSweep() {
+  let rowCount =1;
   outer: for (let y =  arena.length-1; y > 0; y--) {
     for (let x = 0; x < arena[y].length; x++) {
       if (arena[y][x] ===0) {
@@ -41,6 +43,8 @@ function arenaSweep() {
     const row = arena.splice(y,1)[0].fill(0);
     arena.unshift(row);
     ++y
+    player.score += rowCount*10;
+    rowCount*=2;
   }
 }//end arenaSweep
 
@@ -167,6 +171,8 @@ function playerReset() {
 
   if (collide(arena, player)) {
     arena.forEach(row => row.fill(0));
+    player.score = 0;
+    updateScore();
   }
 }//end playerReset
 
@@ -192,6 +198,7 @@ function playerDrop() {
     merge(arena,player);
     playerReset();
     arenaSweep();
+    updateScore();
   }
   dropCounter=0;
 }//end playerDrop
@@ -227,6 +234,10 @@ draw();
 requestAnimationFrame(update);
 }//end update
 
+function updateScore() {
+    document.getElementById('score').innerText = player.score;
+}
+
 
 document.addEventListener('keydown',event =>{
   switch (event.keyCode) {
@@ -251,5 +262,6 @@ document.addEventListener('keydown',event =>{
             break;
   }
 });
-
+playerReset();
+updateScore();
 update();
