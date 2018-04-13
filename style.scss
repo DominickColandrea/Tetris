@@ -1,4 +1,14 @@
+body{
+  background: #202028;
+  color: #fff;
+  font-family: 'Gugi', cursive;
+  font-size: 2em;
+}
 .flex{
   display: flex;
   justify-content: center;
+}
+#tetris{
+   border: solid .2em #fff;
+   height: 85vh;
 }
